@@ -56,6 +56,29 @@ namespace MPExtended.Applications.WebMediaPortal.Code
             LoadLanguage(requestContext.HttpContext.Request);
         }
 
+        protected override void OnException(ExceptionContext context)
+        {
+            if (context.ExceptionHandled)
+            {
+                return;
+            }
+            else if (context.Controller != null && context.Exception.Contains(new Type[] { typeof(System.IO.PipeException), typeof(System.ServiceModel.FaultException) }))
+            {
+                var channelFaultRetry = context.Controller.TempData["ChannelFaultRetry"];
+                if (channelFaultRetry == null)
+                {
+                    Log.Info("Channel fault exception caught while processing {0}. Message={1}", Request.Url, context.Exception.Message);
+                    context.Controller.TempData["ChannelFaultRetry"] = true;
+                    context.Result = Redirect(Request.Url.ToString());
+                    context.ExceptionHandled = true;
+                }
+                else
+                {
+                    Log.Warn("Subsequent channel fault exception left unhandled while processing {0}. Message={1}", Request.Url, context.Exception.Message);
+                }
+            }
+        }
+
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             SetViewBagProperties(ViewBag);
