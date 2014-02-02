@@ -37,7 +37,6 @@ namespace MPExtended.Applications.WebMediaPortal.Controllers
         public ActionResult Index()
         {
             ViewBag.Version = VersionUtil.GetFullVersionString();
-            ServiceAvailability.Reload();
 
             return View(new SettingsViewModel(Settings.ActiveSettings));
         }
@@ -74,7 +73,6 @@ namespace MPExtended.Applications.WebMediaPortal.Controllers
             Log.Info("WebMediaPortal version {0} now connected with MAS {1} and TAS {2}",
                 VersionUtil.GetFullVersionString(), Settings.ActiveSettings.MASUrl, Settings.ActiveSettings.TASUrl);
             Connections.LogServiceVersions();
-            ServiceAvailability.Reload();
             return View("ServicesSaved");
         }
 

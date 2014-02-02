@@ -21,42 +21,92 @@ using System.Linq;
 using System.Web;
 using MPExtended.Applications.WebMediaPortal.Code;
 using MPExtended.Libraries.Service;
+using MPExtended.Services.MediaAccessService.Interfaces;
 
 namespace MPExtended.Applications.WebMediaPortal.Models
 {
     public class AvailabilityModel
     {
-        public bool TAS { get; set; }
-        public bool MAS { get; set; }
-
-        public bool Movies { get; set; }
-        public bool TVShows { get; set; }
-        public bool Music { get; set; }
-
-        public bool Authentication { get; set; }
-
-        public AvailabilityModel()
+        public bool TAS
         {
-            Reload();
+            get
+            {
+                if (Connections.Current.HasTASConnection)
+                {
+                    return true;
+                }
+                else
+                {
+                    Log.Debug("No TAS connection, retrying");
+                    return Connections.Current.HasTASConnection;
+                }
+            }
         }
 
-        public void Reload()
+        public bool MAS
         {
-            Authentication = Configuration.Authentication.Enabled;
+            get
+            {
+                if (Connections.Current.HasMASConnection)
+                {
+                    return true;
+                }
+                else
+                {
+                    Log.Debug("No MAS connection, retrying");
+                    return Connections.Current.HasMASConnection;
+                }
+            }
+        }
 
-            TAS = Connections.Current.HasTASConnection;
-            MAS = Connections.Current.HasMASConnection;
+        public bool Movies
+        {
+            get
+            {
+                if (!MAS)
+                {
+                    Log.Debug("No MAS connection, Movies unavailable");
+                    return false;
+                }
+                WebMediaServiceDescription serviceDescription = Connections.Current.MAS.GetServiceDescription();
+                return Settings.ActiveSettings.MovieProvider == null ? serviceDescription.DefaultMovieLibrary != 0 : serviceDescription.AvailableMovieLibraries.Any(x => x.Id == Settings.ActiveSettings.MovieProvider);
+            }
+        }
 
-            var msd = Connections.Current.HasMASConnection ? Connections.Current.MAS.GetServiceDescription() : null;
-            Movies = MAS &&  (Settings.ActiveSettings.MovieProvider == null ? 
-                              msd.DefaultMovieLibrary != 0 : 
-                              msd.AvailableMovieLibraries.Any(x => x.Id == Settings.ActiveSettings.MovieProvider));
-            TVShows = MAS && (Settings.ActiveSettings.TVShowProvider == null ?
-                              msd.DefaultTvShowLibrary != 0 :
-                              msd.AvailableTvShowLibraries.Any(x => x.Id == Settings.ActiveSettings.TVShowProvider));
-            Music = MAS &&   (Settings.ActiveSettings.MusicProvider == null ?
-                              msd.DefaultMusicLibrary != 0 :
-                              msd.AvailableMusicLibraries.Any(x => x.Id == Settings.ActiveSettings.MusicProvider));
+        public bool TVShows
+        {
+            get
+            {
+                if (!MAS)
+                {
+                    Log.Debug("No MAS connection, TVShows unavailable");
+                    return false;
+                }
+                WebMediaServiceDescription serviceDescription = Connections.Current.MAS.GetServiceDescription();
+                return Settings.ActiveSettings.TVShowProvider == null ? serviceDescription.DefaultTvShowLibrary != 0 : serviceDescription.AvailableTvShowLibraries.Any(x => x.Id == Settings.ActiveSettings.TVShowProvider);
+            }
+        }
+
+        public bool Music
+        {
+            get
+            {
+                if (!MAS)
+                {
+                    Log.Debug("No MAS connection, Music unavailable");
+                    return false;
+                }
+                WebMediaServiceDescription serviceDescription = Connections.Current.MAS.GetServiceDescription();
+                return Settings.ActiveSettings.MusicProvider == null ? serviceDescription.DefaultMusicLibrary != 0 : serviceDescription.AvailableMusicLibraries.Any(x => x.Id == Settings.ActiveSettings.MusicProvider);
+            }
+        }
+
+        public bool Authentication
+        {
+            get
+            {
+                return Configuration.Authentication.Enabled;
+            }
         }
     }
 }
