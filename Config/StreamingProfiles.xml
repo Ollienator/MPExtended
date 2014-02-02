@@ -711,6 +711,61 @@
       </TranscoderParameters>
     </TranscoderProfile>
     
+    <TranscoderProfile>
+      <Name>Flash Audio LQ</Name>
+      <Description>Audio-only (M4A) profile for WebMediaPortal</Description>
+      <HasVideoStream>false</HasVideoStream>
+      <MIME>video/x-flv</MIME>
+      <MaxOutputWidth>0</MaxOutputWidth>
+      <MaxOutputHeight>0</MaxOutputHeight>
+      <Targets>
+        <Target>pc-flash-audio</Target>
+      </Targets>
+      <Bandwidth>96</Bandwidth>
+      <Transport>http</Transport>
+      <Transcoder>MPExtended.Services.StreamingService.Transcoders.FFMpeg</Transcoder>
+      <TranscoderParameters>
+        <setLength>yes</setLength>
+        <codecParameters>-codec:a aac -b:a 96k -ac 2 -strict experimental -async 1 -sn -f flv</codecParameters>
+      </TranscoderParameters>
+    </TranscoderProfile>
+    <TranscoderProfile>
+      <Name>Flash Audio HQ</Name>
+      <Description>Audio-only (M4A) profile for WebMediaPortal</Description>
+      <HasVideoStream>false</HasVideoStream>
+      <MIME>video/x-flv</MIME>
+      <MaxOutputWidth>0</MaxOutputWidth>
+      <MaxOutputHeight>0</MaxOutputHeight>
+      <Targets>
+        <Target>pc-flash-audio</Target>
+      </Targets>
+      <Bandwidth>192</Bandwidth>
+      <Transport>http</Transport>
+      <Transcoder>MPExtended.Services.StreamingService.Transcoders.FFMpeg</Transcoder>
+      <TranscoderParameters>
+        <setLength>yes</setLength>
+        <codecParameters>-codec:a aac -b:a 192k -ac 2 -strict experimental -async 1 -sn -f flv</codecParameters>
+      </TranscoderParameters>
+    </TranscoderProfile>
+    <TranscoderProfile>
+      <Name>Flash Audio HD</Name>
+      <Description>Audio-only (M4A) profile for WebMediaPortal</Description>
+      <HasVideoStream>false</HasVideoStream>
+      <MIME>video/x-flv</MIME>
+      <MaxOutputWidth>0</MaxOutputWidth>
+      <MaxOutputHeight>0</MaxOutputHeight>
+      <Targets>
+        <Target>pc-flash-audio</Target>
+      </Targets>
+      <Bandwidth>384</Bandwidth>
+      <Transport>http</Transport>
+      <Transcoder>MPExtended.Services.StreamingService.Transcoders.FFMpeg</Transcoder>
+      <TranscoderParameters>
+        <setLength>yes</setLength>
+        <codecParameters>-codec:a aac -b:a 384k -ac 2 -strict experimental -async 1 -sn -f flv</codecParameters>
+      </TranscoderParameters>
+    </TranscoderProfile>
+    
     <!-- WP8 Streaming Profiles for native app (http://www.windowsphone.com/s?appid=2f4333f1-fd97-44d6-b234-1da04fd4f05b) -->
     <TranscoderProfile>
       <Name>WP8 FFmpeg WVGA</Name>

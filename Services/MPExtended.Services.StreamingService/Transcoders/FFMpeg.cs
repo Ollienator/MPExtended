@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using MPExtended.Libraries.Service;
@@ -76,34 +77,32 @@ namespace MPExtended.Services.StreamingService.Transcoders
         public virtual string GenerateArguments()
         {
             // calculate stream mappings (no way I'm going to add subtitle support; it's just broken)
-            string mappings = "";
-            if (Context.AudioTrackId != null)
-            {
-                mappings = String.Format("-map v:0 -map a:{0}", Context.MediaInfo.AudioStreams.First(x => x.ID == Context.AudioTrackId).Index);
-            }
+            string videoMapping = Context.Profile.HasVideoStream ? "-map v:0 " : String.Empty;
+            string audioMapping = Context.AudioTrackId != null ? String.Format("-map a:{0}", Context.MediaInfo.AudioStreams.First(x => x.ID == Context.AudioTrackId).Index) : String.Empty;
+
+            // calculate size and aspect
+            bool doResize = !Context.Profile.TranscoderParameters.ContainsKey("noResize") || Context.Profile.TranscoderParameters["noResize"] != "yes";
+            string sizeAndAspect = Context.Profile.HasVideoStream && doResize ? String.Format("-s {0} -aspect {1}:{2}", Context.OutputSize, Context.OutputSize.Width, Context.OutputSize.Height) : String.Empty;
+
+            // calculate start position and length
+            string startPosition = Context.StartPosition != 0 ? String.Format("-ss {0}", Context.StartPosition / 1000) : String.Empty;
+            string setLength = Context.Profile.TranscoderParameters.ContainsKey("setLength") ? String.Format("-t {0}", ((Context.MediaInfo.Duration - Context.StartPosition) / 1000.0).ToString("0.00", CultureInfo.InvariantCulture)) : String.Empty;
+
+            // calculate output
+            string output = ReadOutputStream ? " \"#OUT#\"" : String.Empty;
 
             // calculate full argument string
-            string arguments;
-            bool doResize = !Context.Profile.TranscoderParameters.ContainsKey("noResize") || Context.Profile.TranscoderParameters["noResize"] != "yes";
-            if (Context.Profile.HasVideoStream && doResize)
-            {
-                arguments = String.Format(
-                    "-y {0} -i \"#IN#\" -s {1} -aspect {2}:{3} {4} {5}{6}",
-                    Context.StartPosition != 0 ? "-ss " + (Context.StartPosition / 1000) : "",
-                    Context.OutputSize, Context.OutputSize.Width, Context.OutputSize.Height,
-                    mappings, Context.Profile.TranscoderParameters["codecParameters"],
-                    ReadOutputStream ? " \"#OUT#\"" : ""                    
+            string arguments = String.Format(
+                    "-y {0} -i \"#IN#\" {1} {2} {3}{4} {5}{6}",
+                    startPosition,
+                    setLength,
+                    sizeAndAspect,
+                    videoMapping,
+                    audioMapping,
+                    Context.Profile.TranscoderParameters["codecParameters"],
+                    output
                 );
-            }
-            else
-            {
-                arguments = String.Format(
-                    "-y {0} -i \"#IN#\" {1} {2}{3}",
-                    Context.StartPosition != 0 ? "-ss " + (Context.StartPosition / 1000) : "",
-                    mappings, Context.Profile.TranscoderParameters["codecParameters"],
-                    ReadOutputStream ? " \"#OUT#\"" : ""
-                );
-            }
+
             return arguments;
         }
     }
