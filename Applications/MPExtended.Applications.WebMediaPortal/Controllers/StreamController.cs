@@ -504,29 +504,29 @@ namespace MPExtended.Applications.WebMediaPortal.Controllers
 
         //
         // Stream wrapper URLs
-        public ActionResult TV(string item, string transcoder, int starttime = 0, int fileindex = 0, string continuationId = null)
+        public ActionResult TV(string item, string transcoder, double start = 0, int fileindex = 0, string continuationId = null)
         {
-            return GenerateStream(WebMediaType.TV, item, fileindex, transcoder, starttime, continuationId);
+            return GenerateStream(WebMediaType.TV, item, fileindex, transcoder, (int)start, continuationId);
         }
 
-        public ActionResult Movie(string item, string transcoder, int starttime = 0, int fileindex = 0, string continuationId = null)
+        public ActionResult Movie(string item, string transcoder, double start = 0, int fileindex = 0, string continuationId = null)
         {
-            return GenerateStream(WebMediaType.Movie, item, fileindex, transcoder, starttime, continuationId);
+            return GenerateStream(WebMediaType.Movie, item, fileindex, transcoder, (int)start, continuationId);
         }
 
-        public ActionResult TVEpisode(string item, string transcoder, int starttime = 0, int fileindex = 0, string continuationId = null)
+        public ActionResult TVEpisode(string item, string transcoder, double start = 0, int fileindex = 0, string continuationId = null)
         {
-            return GenerateStream(WebMediaType.TVEpisode, item, fileindex, transcoder, starttime, continuationId);
+            return GenerateStream(WebMediaType.TVEpisode, item, fileindex, transcoder, (int)start, continuationId);
         }
 
-        public ActionResult Recording(string item, string transcoder, int starttime = 0, int fileindex = 0, string continuationId = null)
+        public ActionResult Recording(string item, string transcoder, double start = 0, int fileindex = 0, string continuationId = null)
         {
-            return GenerateStream(WebMediaType.Recording, item, fileindex, transcoder, starttime, continuationId);
+            return GenerateStream(WebMediaType.Recording, item, fileindex, transcoder, (int)start, continuationId);
         }
 
-        public ActionResult MusicTrack(string item, string transcoder, int starttime = 0, int fileindex = 0, string continuationId = null)
+        public ActionResult MusicTrack(string item, string transcoder, double start = 0, int fileindex = 0, string continuationId = null)
         {
-            return GenerateStream(WebMediaType.MusicTrack, item, fileindex, transcoder, starttime, continuationId);
+            return GenerateStream(WebMediaType.MusicTrack, item, fileindex, transcoder, (int)start, continuationId);
         }
 
         //
