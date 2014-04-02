@@ -77,7 +77,7 @@ namespace MPExtended.Services.StreamingService.Transcoders
         public virtual string GenerateArguments()
         {
             // calculate stream mappings (no way I'm going to add subtitle support; it's just broken)
-            string videoMapping = Context.Profile.HasVideoStream ? "-map v:0 " : String.Empty;
+            string videoMapping = Context.Profile.HasVideoStream ? "-map v:0" : String.Empty;
             string audioMapping = Context.AudioTrackId != null ? String.Format("-map a:{0}", Context.MediaInfo.AudioStreams.First(x => x.ID == Context.AudioTrackId).Index) : String.Empty;
 
             // calculate size and aspect
@@ -88,18 +88,22 @@ namespace MPExtended.Services.StreamingService.Transcoders
             string startPosition = Context.StartPosition != 0 ? String.Format("-ss {0}", Context.StartPosition / 1000) : String.Empty;
             string setLength = Context.Profile.TranscoderParameters.ContainsKey("setLength") ? String.Format("-t {0}", ((Context.MediaInfo.Duration - Context.StartPosition) / 1000.0).ToString("0.00", CultureInfo.InvariantCulture)) : String.Empty;
 
+            // apply TS options
+            string tsOptions = ((Context.IsTv || Context.MediaInfo.Container == "MPEG-TS") && Context.Profile.TranscoderParameters.ContainsKey("tsOptions")) ? Context.Profile.TranscoderParameters["tsOptions"] : String.Empty;
+
             // calculate output
-            string output = ReadOutputStream ? " \"#OUT#\"" : String.Empty;
+            string output = ReadOutputStream ? "\"#OUT#\"" : String.Empty;
 
             // calculate full argument string
             string arguments = String.Format(
-                    "-y {0} -i \"#IN#\" {1} {2} {3}{4} {5}{6}",
+                    "-y {0} -i \"#IN#\" {1} {2} {3} {4} {5} {6} {7}",
                     startPosition,
                     setLength,
                     sizeAndAspect,
                     videoMapping,
                     audioMapping,
                     Context.Profile.TranscoderParameters["codecParameters"],
+                    tsOptions,
                     output
                 );
 

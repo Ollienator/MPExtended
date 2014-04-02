@@ -46,9 +46,9 @@ namespace MPExtended.Services.StreamingService.Transcoders
             httpLiveStreamer.AppendPipeline();
         }
 
-        protected override VLCParameters GenerateVLCParameters(string options, string tsOptions, bool disableSeeking, string encoderOptions, string muxerOptions)
+        protected override VLCParameters GenerateVLCParameters(string options, string tsOptions, bool disableSeeking, string encoderOptions, string tsEncoderOptions, string muxerOptions)
         {
-            return base.GenerateVLCParameters(options, tsOptions, disableSeeking, encoderOptions, httpLiveStreamer.GetFullMuxerString());
+            return base.GenerateVLCParameters(options, tsOptions, disableSeeking, encoderOptions, tsEncoderOptions, httpLiveStreamer.GetFullMuxerString());
         }
 
         public Stream CustomActionData(string action, string parameters)

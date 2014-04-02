@@ -45,6 +45,7 @@
 
       <Transcoder>MPExtended.Services.StreamingService.Transcoders.FFMpeg</Transcoder>
       <TranscoderParameters>
+        <tsOptions>-vf crop=in_w-16:in_h-8:8:4</tsOptions>
         <codecParameters>-codec:v libx264 -b:v 1768k -profile:v baseline -preset:v faster -coder rle -codec:a aac -b:a 512k -ac 2 -strict experimental -async 1 -sn -f mpegts</codecParameters>
       </TranscoderParameters>
     </TranscoderProfile>
@@ -63,6 +64,7 @@
 
       <Transcoder>MPExtended.Services.StreamingService.Transcoders.FFMpeg</Transcoder>
       <TranscoderParameters>
+        <tsOptions>-vf crop=in_w-16:in_h-8:8:4</tsOptions>
         <codecParameters>-codec:v libx264 -b:v 1024k -profile:v baseline -preset:v veryfast -coder rle -codec:a aac -b:a 256k -ac 2 -strict experimental -async 1 -sn -f mpegts</codecParameters>
       </TranscoderParameters>
     </TranscoderProfile>
@@ -81,6 +83,7 @@
 
       <Transcoder>MPExtended.Services.StreamingService.Transcoders.FFMpeg</Transcoder>
       <TranscoderParameters>
+        <tsOptions>-vf crop=in_w-16:in_h-8:8:4</tsOptions>
         <codecParameters>-codec:v libx264 -b:v 768k -profile:v baseline -preset:v superfast -coder rle -codec:a aac -b:a 128k -ac 2 -strict experimental -async 1 -sn -f mpegts</codecParameters>
       </TranscoderParameters>
     </TranscoderProfile>
@@ -99,6 +102,7 @@
 
       <Transcoder>MPExtended.Services.StreamingService.Transcoders.FFMpeg</Transcoder>
       <TranscoderParameters>
+        <tsOptions>-vf crop=in_w-16:in_h-8:8:4</tsOptions>
         <codecParameters>-codec:v libx264 -b:v 512k -profile:v baseline -preset:v superfast -coder rle -codec:a aac -b:a 128k -ac 2 -strict experimental -async 1 -sn -f mpegts</codecParameters>
       </TranscoderParameters>
     </TranscoderProfile>
@@ -117,6 +121,7 @@
 
       <Transcoder>MPExtended.Services.StreamingService.Transcoders.FFMpeg</Transcoder>
       <TranscoderParameters>
+        <tsOptions>-vf crop=in_w-16:in_h-8:8:4</tsOptions>
         <codecParameters>-codec:v libx264 -b:v 256k -profile:v baseline -preset:v ultrafast -coder rle -codec:a aac -b:a 64k -ac 2 -strict experimental -async 1 -sn -f mpegts</codecParameters>
       </TranscoderParameters>
     </TranscoderProfile>
@@ -135,6 +140,7 @@
 
       <Transcoder>MPExtended.Services.StreamingService.Transcoders.FFMpeg</Transcoder>
       <TranscoderParameters>
+        <tsOptions>-vf crop=in_w-16:in_h-8:8:4</tsOptions>
         <codecParameters>-codec:v libx264 -b:v 128k -profile:v baseline -preset:v ultrafast -coder rle -codec:a aac -b:a 48k -ac 2 -strict experimental -async 1 -sn -f mpegts</codecParameters>
       </TranscoderParameters>
     </TranscoderProfile>
@@ -180,6 +186,8 @@
       <TranscoderParameters>
         <path>%mpextended-streaming%\vlc-2.0.2\MPExtended.Libraries.VLCWrapper.exe</path>
         <options>--ffmpeg-hw --sout-ffmpeg-strict=-2</options>
+        <tsOptions>--sout-mux-caching=5000 --sout-transcode-fps=25</tsOptions>
+        <tsEncoderOptions>vfilter=croppadd{cropleft=16,croptop=9,cropright=16,cropbottom=9}</tsEncoderOptions>
         <encoder>vcodec=h264,vb=1768,venc=x264{profile=baseline,preset=faster,no-cabac,trellis=0,keyint=50},deinterlace=-1,aenc=ffmpeg{aac-profile=low},acodec=mp4a,ab=512,samplerate=48000,channels=2,audio-sync</encoder>
         <muxer>:standard{access=file,mux=ts,dst=#OUT#}</muxer>
       </TranscoderParameters>
@@ -201,6 +209,8 @@
       <TranscoderParameters>
         <path>%mpextended-streaming%\vlc-2.0.2\MPExtended.Libraries.VLCWrapper.exe</path>
         <options>--ffmpeg-hw --sout-ffmpeg-strict=-2</options>
+        <tsOptions>--sout-mux-caching=5000 --sout-transcode-fps=25</tsOptions>
+        <tsEncoderOptions>vfilter=croppadd{cropleft=16,croptop=9,cropright=16,cropbottom=9}</tsEncoderOptions>
         <encoder>vcodec=h264,vb=1024,venc=x264{profile=baseline,preset=veryfast,no-cabac,trellis=0,keyint=50},deinterlace=-1,aenc=ffmpeg{aac-profile=low},acodec=mp4a,ab=256,samplerate=48000,channels=2,audio-sync</encoder>
         <muxer>:standard{access=file,mux=ts,dst=#OUT#}</muxer>
       </TranscoderParameters>
@@ -222,6 +232,8 @@
       <TranscoderParameters>
         <path>%mpextended-streaming%\vlc-2.0.2\MPExtended.Libraries.VLCWrapper.exe</path>
         <options>--ffmpeg-hw --sout-ffmpeg-strict=-2</options>
+        <tsOptions>--sout-mux-caching=5000 --sout-transcode-fps=25</tsOptions>
+        <tsEncoderOptions>vfilter=croppadd{cropleft=16,croptop=9,cropright=16,cropbottom=9}</tsEncoderOptions>
         <encoder>vcodec=h264,vb=768,venc=x264{profile=baseline,preset=superfast,no-cabac,trellis=0,keyint=50},deinterlace=-1,aenc=ffmpeg{aac-profile=low},acodec=mp4a,ab=128,samplerate=48000,channels=2,audio-sync</encoder>
         <muxer>:standard{access=file,mux=ts,dst=#OUT#}</muxer>
       </TranscoderParameters>
@@ -243,6 +255,8 @@
       <TranscoderParameters>
         <path>%mpextended-streaming%\vlc-2.0.2\MPExtended.Libraries.VLCWrapper.exe</path>
         <options>--ffmpeg-hw --sout-ffmpeg-strict=-2</options>
+        <tsOptions>--sout-mux-caching=5000 --sout-transcode-fps=25</tsOptions>
+        <tsEncoderOptions>vfilter=croppadd{cropleft=16,croptop=9,cropright=16,cropbottom=9}</tsEncoderOptions>
         <encoder>vcodec=h264,vb=512,venc=x264{profile=baseline,preset=superfast,no-cabac,trellis=0,keyint=50},deinterlace=-1,aenc=ffmpeg{aac-profile=low},acodec=mp4a,ab=128,samplerate=48000,channels=2,audio-sync</encoder>
         <muxer>:standard{access=file,mux=ts,dst=#OUT#}</muxer>
       </TranscoderParameters>
@@ -264,6 +278,8 @@
       <TranscoderParameters>
         <path>%mpextended-streaming%\vlc-2.0.2\MPExtended.Libraries.VLCWrapper.exe</path>
         <options>--ffmpeg-hw --sout-ffmpeg-strict=-2</options>
+        <tsOptions>--sout-mux-caching=5000 --sout-transcode-fps=25</tsOptions>
+        <tsEncoderOptions>vfilter=croppadd{cropleft=16,croptop=9,cropright=16,cropbottom=9}</tsEncoderOptions>
         <encoder>vcodec=h264,vb=256,venc=x264{profile=baseline,preset=ultrafast,no-cabac,trellis=0,keyint=50},deinterlace=-1,aenc=ffmpeg{aac-profile=low},acodec=mp4a,ab=64,samplerate=48000,channels=2,audio-sync</encoder>
         <muxer>:standard{access=file,mux=ts,dst=#OUT#}</muxer>
       </TranscoderParameters>
@@ -284,6 +300,8 @@
       <TranscoderParameters>
         <path>%mpextended-streaming%\vlc-2.0.2\MPExtended.Libraries.VLCWrapper.exe</path>
         <options>--ffmpeg-hw --sout-ffmpeg-strict=-2</options>
+        <tsOptions>--sout-mux-caching=5000 --sout-transcode-fps=25</tsOptions>
+        <tsEncoderOptions>vfilter=croppadd{cropleft=16,croptop=9,cropright=16,cropbottom=9}</tsEncoderOptions>
         <encoder>vcodec=h264,vb=128,venc=x264{profile=baseline,preset=ultrafast,no-cabac,trellis=0,keyint=50},deinterlace=-1,aenc=ffmpeg{aac-profile=low},acodec=mp4a,ab=48,samplerate=48000,channels=2,audio-sync</encoder>
         <muxer>:standard{access=file,mux=ts,dst=#OUT#}</muxer>
       </TranscoderParameters>
@@ -309,7 +327,8 @@
       <TranscoderParameters>
         <path>%mpextended-streaming%\vlc-2.0.2\MPExtended.Libraries.VLCWrapper.exe</path>
         <options>--ffmpeg-hw --sout-ffmpeg-strict=-2</options>
-        <tsOptions>--sout-mux-caching=5000</tsOptions>
+        <tsOptions>--sout-mux-caching=5000 --sout-transcode-fps=25</tsOptions>
+        <tsEncoderOptions>vfilter=croppadd{cropleft=16,croptop=9,cropright=16,cropbottom=9}</tsEncoderOptions>
         <encoder>vcodec=h264,vb=1768,venc=x264{aud,level=30,keyint=50,bframes=0,profile=baseline,preset=faster},deinterlace=-1,acodec=mp4a,ab=256,channels=2,samplerate=48000,audio-sync</encoder>
         <muxer>ts{use-key-frames}</muxer>
         <httpLiveOptions>seglen=7,delsegs=false,numsegs=0</httpLiveOptions>
@@ -335,7 +354,8 @@
       <TranscoderParameters>
         <path>%mpextended-streaming%\vlc-2.0.2\MPExtended.Libraries.VLCWrapper.exe</path>
         <options>--ffmpeg-hw --sout-ffmpeg-strict=-2</options>
-        <tsOptions>--sout-mux-caching=5000</tsOptions>
+        <tsOptions>--sout-mux-caching=5000 --sout-transcode-fps=25</tsOptions>
+        <tsEncoderOptions>vfilter=croppadd{cropleft=16,croptop=9,cropright=16,cropbottom=9}</tsEncoderOptions>
         <encoder>vcodec=h264,vb=1024,venc=x264{aud,level=30,keyint=50,bframes=0,profile=baseline,preset=veryfast},deinterlace=-1,acodec=mp4a,ab=256,channels=2,samplerate=48000,audio-sync</encoder>
         <muxer>ts{use-key-frames}</muxer>
         <httpLiveOptions>seglen=7,delsegs=false,numsegs=0</httpLiveOptions>
@@ -361,7 +381,8 @@
       <TranscoderParameters>
         <path>%mpextended-streaming%\vlc-2.0.2\MPExtended.Libraries.VLCWrapper.exe</path>
         <options>--ffmpeg-hw --sout-ffmpeg-strict=-2</options>
-        <tsOptions>--sout-mux-caching=5000</tsOptions>
+        <tsOptions>--sout-mux-caching=5000 --sout-transcode-fps=25</tsOptions>
+        <tsEncoderOptions>vfilter=croppadd{cropleft=16,croptop=9,cropright=16,cropbottom=9}</tsEncoderOptions>
         <encoder>vcodec=h264,vb=768,venc=x264{aud,level=30,keyint=50,bframes=0,profile=baseline,preset=superfast},deinterlace=-1,acodec=mp4a,ab=128,channels=2,samplerate=48000,audio-sync</encoder>
         <muxer>ts{use-key-frames}</muxer>
         <httpLiveOptions>seglen=7,delsegs=false,numsegs=0</httpLiveOptions>
@@ -387,7 +408,8 @@
       <TranscoderParameters>
         <path>%mpextended-streaming%\vlc-2.0.2\MPExtended.Libraries.VLCWrapper.exe</path>
         <options>--ffmpeg-hw --sout-ffmpeg-strict=-2</options>
-        <tsOptions>--sout-mux-caching=5000</tsOptions>
+        <tsOptions>--sout-mux-caching=5000 --sout-transcode-fps=25</tsOptions>
+        <tsEncoderOptions>vfilter=croppadd{cropleft=16,croptop=9,cropright=16,cropbottom=9}</tsEncoderOptions>
         <encoder>vcodec=h264,vb=512,venc=x264{aud,level=30,keyint=50,bframes=0,profile=baseline,preset=superfast},deinterlace=-1,acodec=mp4a,ab=128,channels=2,samplerate=48000,audio-sync</encoder>
         <muxer>ts{use-key-frames}</muxer>
         <httpLiveOptions>seglen=7,delsegs=false,numsegs=0</httpLiveOptions>
@@ -413,7 +435,8 @@
       <TranscoderParameters>
         <path>%mpextended-streaming%\vlc-2.0.2\MPExtended.Libraries.VLCWrapper.exe</path>
         <options>--ffmpeg-hw --sout-ffmpeg-strict=-2</options>
-        <tsOptions>--sout-mux-caching=5000</tsOptions>
+        <tsOptions>--sout-mux-caching=5000 --sout-transcode-fps=25</tsOptions>
+        <tsEncoderOptions>vfilter=croppadd{cropleft=16,croptop=9,cropright=16,cropbottom=9}</tsEncoderOptions>
         <encoder>vcodec=h264,vb=256,venc=x264{aud,level=30,keyint=50,bframes=0,profile=baseline,preset=ultrafast},deinterlace=-1,acodec=mp4a,ab=64,channels=2,samplerate=48000,audio-sync</encoder>
         <muxer>ts{use-key-frames}</muxer>
         <httpLiveOptions>seglen=7,delsegs=false,numsegs=0</httpLiveOptions>
@@ -439,7 +462,8 @@
       <TranscoderParameters>
         <path>%mpextended-streaming%\vlc-2.0.2\MPExtended.Libraries.VLCWrapper.exe</path>
         <options>--ffmpeg-hw --sout-ffmpeg-strict=-2</options>
-        <tsOptions>--sout-mux-caching=5000</tsOptions>
+        <tsOptions>--sout-mux-caching=5000 --sout-transcode-fps=25</tsOptions>
+        <tsEncoderOptions>vfilter=croppadd{cropleft=16,croptop=9,cropright=16,cropbottom=9}</tsEncoderOptions>
         <encoder>vcodec=h264,vb=128,venc=x264{aud,level=30,keyint=50,bframes=0,profile=baseline,preset=ultrafast},deinterlace=-1,acodec=mp4a,ab=48,channels=2,samplerate=48000,audio-sync</encoder>
         <muxer>ts{use-key-frames}</muxer>
         <httpLiveOptions>seglen=7,delsegs=false,numsegs=0</httpLiveOptions>
@@ -465,6 +489,7 @@
 
       <Transcoder>MPExtended.Services.StreamingService.Transcoders.FFMpegWrapperHTTPLiveStreaming</Transcoder>
       <TranscoderParameters>
+        <tsOptions>-vf crop=in_w-16:in_h-8:8:4</tsOptions>
         <codecParameters>-codec:v libx264 -b:v 1768k -profile:v baseline -preset:v faster -coder rle -keyint_min 25 -g 25 -codec:a aac -b:a 512k -ac 2 -strict experimental -async 1 -sn -bsf h264_mp4toannexb -flags -global_header -f segment -segment_list_flags +live -segment_time 5</codecParameters>
         <httpLiveRemoveOld>5</httpLiveRemoveOld>
       </TranscoderParameters>
@@ -486,6 +511,7 @@
 
       <Transcoder>MPExtended.Services.StreamingService.Transcoders.FFMpegWrapperHTTPLiveStreaming</Transcoder>
       <TranscoderParameters>
+        <tsOptions>-vf crop=in_w-16:in_h-8:8:4</tsOptions>
         <codecParameters>-codec:v libx264 -b:v 1024k -profile:v baseline -preset:v veryfast -coder rle -keyint_min 25 -g 25 -codec:a aac -b:a 256k -ac 2 -strict experimental -async 1 -sn -bsf h264_mp4toannexb -flags -global_header -f segment -segment_list_flags +live -segment_time 5</codecParameters>
         <httpLiveRemoveOld>5</httpLiveRemoveOld>
       </TranscoderParameters>
@@ -507,6 +533,7 @@
 
       <Transcoder>MPExtended.Services.StreamingService.Transcoders.FFMpegWrapperHTTPLiveStreaming</Transcoder>
       <TranscoderParameters>
+        <tsOptions>-vf crop=in_w-16:in_h-8:8:4</tsOptions>
         <codecParameters>-codec:v libx264 -b:v 768k -profile:v baseline -preset:v superfast -coder rle -keyint_min 25 -g 25 -codec:a aac -b:a 128k -ac 2 -strict experimental -async 1 -sn -bsf h264_mp4toannexb -flags -global_header -f segment -segment_list_flags +live -segment_time 5</codecParameters>
         <httpLiveRemoveOld>5</httpLiveRemoveOld>
       </TranscoderParameters>
@@ -528,6 +555,7 @@
 
       <Transcoder>MPExtended.Services.StreamingService.Transcoders.FFMpegWrapperHTTPLiveStreaming</Transcoder>
       <TranscoderParameters>
+        <tsOptions>-vf crop=in_w-16:in_h-8:8:4</tsOptions>
         <codecParameters>-codec:v libx264 -b:v 512k -profile:v baseline -preset:v superfast -coder rle -keyint_min 25 -g 25 -codec:a aac -b:a 128k -ac 2 -strict experimental -async 1 -sn -bsf h264_mp4toannexb -flags -global_header -f segment -segment_list_flags +live -segment_time 5</codecParameters>
         <httpLiveRemoveOld>5</httpLiveRemoveOld>
       </TranscoderParameters>
@@ -550,6 +578,7 @@
 
       <Transcoder>MPExtended.Services.StreamingService.Transcoders.FFMpegWrapperHTTPLiveStreaming</Transcoder>
       <TranscoderParameters>
+        <tsOptions>-vf crop=in_w-16:in_h-8:8:4</tsOptions>
         <codecParameters>-codec:v libx264 -b:v 256k -profile:v baseline -preset:v ultrafast -coder rle -keyint_min 25 -g 25 -codec:a aac -b:a 64k -ac 1 -strict experimental -async 1 -sn -bsf h264_mp4toannexb -flags -global_header -f segment -segment_list_flags +live -segment_time 5</codecParameters>
         <httpLiveRemoveOld>5</httpLiveRemoveOld>
       </TranscoderParameters>
@@ -571,6 +600,7 @@
 
       <Transcoder>MPExtended.Services.StreamingService.Transcoders.FFMpegWrapperHTTPLiveStreaming</Transcoder>
       <TranscoderParameters>
+        <tsOptions>-vf crop=in_w-16:in_h-8:8:4</tsOptions>
         <codecParameters>-codec:v libx264 -b:v 128k -profile:v baseline -preset:v ultrafast -coder rle -keyint_min 25 -g 25 -codec:a aac -b:a 48k -ac 1 -strict experimental -async 1 -sn -bsf h264_mp4toannexb -flags -global_header -f segment -segment_list_flags +live -segment_time 5</codecParameters>
         <httpLiveRemoveOld>5</httpLiveRemoveOld>
       </TranscoderParameters>
@@ -595,6 +625,8 @@
         <flvMetadataInjection>yes</flvMetadataInjection>
         <path>%mpextended-streaming%\vlc-2.0.2\MPExtended.Libraries.VLCWrapper.exe</path>
         <options>--ffmpeg-hw --sout-ffmpeg-strict=-2</options>
+        <tsOptions>--sout-mux-caching=5000 --sout-transcode-fps=25</tsOptions>
+        <tsEncoderOptions>vfilter=croppadd{cropleft=16,croptop=9,cropright=16,cropbottom=9}</tsEncoderOptions>
         <encoder>vcodec=h264,vb=2048,venc=x264{profile=baseline,preset=faster},deinterlace=-1,acodec=mp4a,ab=256,channels=2,samplerate=48000,audio-sync</encoder>
         <muxer>:standard{access=file,mux=ffmpeg{mux=flv},dst=#OUT#}</muxer>
       </TranscoderParameters>
@@ -617,6 +649,8 @@
         <flvMetadataInjection>yes</flvMetadataInjection>
         <path>%mpextended-streaming%\vlc-2.0.2\MPExtended.Libraries.VLCWrapper.exe</path>
         <options>--ffmpeg-hw --sout-ffmpeg-strict=-2</options>
+        <tsOptions>--sout-mux-caching=5000 --sout-transcode-fps=25</tsOptions>
+        <tsEncoderOptions>vfilter=croppadd{cropleft=16,croptop=9,cropright=16,cropbottom=9}</tsEncoderOptions>
         <encoder>vcodec=h264,vb=1280,venc=x264{profile=baseline,preset=veryfast},deinterlace=-1,acodec=mp4a,ab=192,channels=2,samplerate=48000,audio-sync</encoder>
         <muxer>:standard{access=file,mux=ffmpeg{mux=flv},dst=#OUT#}</muxer>
       </TranscoderParameters>
@@ -639,7 +673,8 @@
         <flvMetadataInjection>yes</flvMetadataInjection>
         <path>%mpextended-streaming%\vlc-2.0.2\MPExtended.Libraries.VLCWrapper.exe</path>
         <options>--ffmpeg-hw --sout-ffmpeg-strict=-2</options>
-        <tsOptions>--sout-mux-caching=5000</tsOptions>
+        <tsOptions>--sout-mux-caching=5000 --sout-transcode-fps=25</tsOptions>
+        <tsEncoderOptions>vfilter=croppadd{cropleft=16,croptop=9,cropright=16,cropbottom=9}</tsEncoderOptions>
         <encoder>vcodec=h264,vb=768,venc=x264{profile=baseline,preset=superfast},deinterlace=-1,acodec=mp4a,ab=128,channels=2,samplerate=48000,audio-sync</encoder>
         <muxer>:standard{access=file,mux=ffmpeg{mux=flv},dst=#OUT#}</muxer>
       </TranscoderParameters>
@@ -662,7 +697,8 @@
         <flvMetadataInjection>yes</flvMetadataInjection>
         <path>%mpextended-streaming%\vlc-2.0.2\MPExtended.Libraries.VLCWrapper.exe</path>
         <options>--ffmpeg-hw --sout-ffmpeg-strict=-2</options>
-        <tsOptions>--sout-mux-caching=5000</tsOptions>
+        <tsOptions>--sout-mux-caching=5000 --sout-transcode-fps=25</tsOptions>
+        <tsEncoderOptions>vfilter=croppadd{cropleft=16,croptop=9,cropright=16,cropbottom=9}</tsEncoderOptions>
         <encoder>vcodec=h264,vb=512,venc=x264{profile=baseline,preset=ultrafast},deinterlace=-1,acodec=mp4a,ab=96,channels=2,samplerate=48000,audio-sync</encoder>
         <muxer>:standard{access=file,mux=ffmpeg{mux=flv},dst=#OUT#}</muxer>
       </TranscoderParameters>
@@ -685,7 +721,8 @@
         <flvMetadataInjection>yes</flvMetadataInjection>
         <path>%mpextended-streaming%\vlc-2.0.2\MPExtended.Libraries.VLCWrapper.exe</path>
         <options>--ffmpeg-hw --sout-ffmpeg-strict=-2</options>
-        <tsOptions>--sout-mux-caching=5000</tsOptions>
+        <tsOptions>--sout-mux-caching=5000 --sout-transcode-fps=25</tsOptions>
+        <tsEncoderOptions>vfilter=croppadd{cropleft=16,croptop=9,cropright=16,cropbottom=9}</tsEncoderOptions>
         <encoder>vcodec=h264,vb=384,venc=x264{profile=baseline,preset=ultrafast},deinterlace=-1,acodec=mp4a,ab=64,channels=2,samplerate=48000,audio-sync</encoder>
         <muxer>:standard{access=file,mux=ffmpeg{mux=flv},dst=#OUT#}</muxer>
       </TranscoderParameters>
@@ -710,7 +747,8 @@
         <muxer>:standard{access=file,mux=dummy,dst=#OUT#}</muxer>
       </TranscoderParameters>
     </TranscoderProfile>
-    
+
+    <!-- Flash Audio-only streaming for WebMediaPortal -->
     <TranscoderProfile>
       <Name>Flash Audio LQ</Name>
       <Description>Audio-only (M4A) profile for WebMediaPortal</Description>
@@ -723,6 +761,7 @@
       </Targets>
       <Bandwidth>96</Bandwidth>
       <Transport>http</Transport>
+      
       <Transcoder>MPExtended.Services.StreamingService.Transcoders.FFMpeg</Transcoder>
       <TranscoderParameters>
         <setLength>yes</setLength>
@@ -741,6 +780,7 @@
       </Targets>
       <Bandwidth>192</Bandwidth>
       <Transport>http</Transport>
+
       <Transcoder>MPExtended.Services.StreamingService.Transcoders.FFMpeg</Transcoder>
       <TranscoderParameters>
         <setLength>yes</setLength>
@@ -759,6 +799,7 @@
       </Targets>
       <Bandwidth>384</Bandwidth>
       <Transport>http</Transport>
+      
       <Transcoder>MPExtended.Services.StreamingService.Transcoders.FFMpeg</Transcoder>
       <TranscoderParameters>
         <setLength>yes</setLength>

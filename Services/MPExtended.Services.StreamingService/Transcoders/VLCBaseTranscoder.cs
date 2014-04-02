@@ -93,11 +93,12 @@ namespace MPExtended.Services.StreamingService.Transcoders
                 Context.Profile.TranscoderParameters.ContainsKey("tsOptions") ? Context.Profile.TranscoderParameters["tsOptions"] : String.Empty,
                 Context.Profile.TranscoderParameters.ContainsKey("disableSeeking") && Context.Profile.TranscoderParameters["disableSeeking"] == "yes",
                 Context.Profile.TranscoderParameters.ContainsKey("encoder") ? Context.Profile.TranscoderParameters["encoder"] : String.Empty,
+                Context.Profile.TranscoderParameters.ContainsKey("tsEncoderOptions") ? Context.Profile.TranscoderParameters["tsEncoderOptions"] : String.Empty,
                 Context.Profile.TranscoderParameters["muxer"]
             );
         }
 
-        protected virtual VLCParameters GenerateVLCParameters(string options, string tsOptions, bool disableSeeking, string encoderOptions, string muxerOptions)
+        protected virtual VLCParameters GenerateVLCParameters(string options, string tsOptions, bool disableSeeking, string encoderOptions, string tsEncoderOptions, string muxerOptions)
         {
             List<string> arguments = options.Split(' ').Where(x => x.Length > 0).ToList();
 
@@ -159,9 +160,15 @@ namespace MPExtended.Services.StreamingService.Transcoders
             if (!String.IsNullOrEmpty(encoderOptions))
             {
 			    sout = "#transcode{" + encoderOptions + "," + subtitleTranscoder;
-				if (!Context.Profile.TranscoderParameters.ContainsKey("noResize") || Context.Profile.TranscoderParameters["noResize"] != "yes")
-					sout += ",width=" + Context.OutputSize.Width + ",height=" + Context.OutputSize.Height;
-				sout += "}" + muxerOptions;
+                if ((Context.IsTv || Context.MediaInfo.Container == "MPEG-TS") && !String.IsNullOrEmpty(tsEncoderOptions))
+                {
+                    sout += "," + tsEncoderOptions;
+                }
+                if (!Context.Profile.TranscoderParameters.ContainsKey("noResize") || Context.Profile.TranscoderParameters["noResize"] != "yes")
+                {
+                    sout += ",width=" + Context.OutputSize.Width + ",height=" + Context.OutputSize.Height;
+                }
+                sout += "}" + muxerOptions;
             }
             else
             {
